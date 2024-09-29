@@ -1,6 +1,6 @@
 export const fetchHomePageData = async () => {
     try {
-        const resJSON = await fetch("http://95.213.229.56:8000/get-categories", {
+        const resJSON = await fetch("api/get-categories", {
             method: "get",
             headers: {
                 "Constent-Type": "application/json",
@@ -15,7 +15,7 @@ export const fetchHomePageData = async () => {
 
 export const fetchCategoryPageData = async (categoryLink: string, page: number) => {
     try {
-        const resJSON = await fetch("http://95.213.229.56:8000/product-category", {
+        const resJSON = await fetch("api/product-category", {
             method: "get",
             headers: {
                 "Constent-Type": "application/json",
@@ -32,7 +32,7 @@ export const fetchCategoryPageData = async (categoryLink: string, page: number) 
 
 export const fetchSearchResultPageData = async (searchRequest: string) => {
     try {
-        const resJSON = await fetch("http://95.213.229.56:8000/search", {
+        const resJSON = await fetch("api/search", {
             method: "get",
             headers: {
                 "Constent-Type": "application/json",
@@ -48,7 +48,7 @@ export const fetchSearchResultPageData = async (searchRequest: string) => {
 
 export const sendOrderData = async (sendedData: any) => {
     try {
-        const resJSON = await fetch("http://95.213.229.56:8000/order", {
+        const resJSON = await fetch("api/order", {
             method: "post",
             headers: {
                 "Constent-Type": "application/json",
