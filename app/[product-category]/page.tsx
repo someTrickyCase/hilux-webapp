@@ -1,10 +1,12 @@
 import CategoryPage from "@/pages/CategoryPage";
 import React from "react";
 
-export const ProductCatalog = () => {
+const page = () => {
     return (
         <div>
             <CategoryPage />
         </div>
     );
 };
+
+export default page;
