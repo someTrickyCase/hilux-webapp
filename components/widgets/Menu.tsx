@@ -4,7 +4,6 @@ import {
     Sheet,
     SheetClose,
     SheetContent,
-    SheetDescription,
     SheetFooter,
     SheetHeader,
     SheetTitle,
@@ -17,15 +16,13 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import SearchBar from "../shared/SearchBar";
 
 const Menu = ({ menu, className }: { menu?: any; className?: string }) => {
     const [state, setState] = useState<any>([]);
 
     useEffect(() => {
         const menuRef = [];
-        for (let key in menu) {
+        for (const key in menu) {
             menuRef.push({ title: key, link: menu[key].link, tabs: menu[key].tabs });
         }
         setState(menuRef);
@@ -58,7 +55,7 @@ const Menu = ({ menu, className }: { menu?: any; className?: string }) => {
                 {/* <SearchBar /> */}
                 <div className='w-[90%] flex flex-col gap-[16px]'>
                     {state.map((item: any) => (
-                        <Accordion type='single' collapsible>
+                        <Accordion key={JSON.stringify(item)} type='single' collapsible>
                             <AccordionItem value='item-1' className='border-none mb-[-12px]'>
                                 <AccordionTrigger className='text-2xl font-bold'>
                                     <a href={item.link}>{item.title}</a>
@@ -67,6 +64,7 @@ const Menu = ({ menu, className }: { menu?: any; className?: string }) => {
                                     <div className='flex flex-col'>
                                         {item.tabs.map((innerItem: any) => (
                                             <a
+                                                key={JSON.stringify(item)}
                                                 href={innerItem.link}
                                                 className='ml-[10px] mb-[10px] text-lg font-extrabold cursor-pointer hover:text-orange'>
                                                 {innerItem.title}

@@ -42,7 +42,11 @@ const FeedCard = ({ item }: { item: FeedCardType }) => {
                 ) : (
                     <div className='flex w-[100px] overflow-y-scroll no-scrollbar'>
                         {item.images?.map((item) => (
-                            <img className='h-[100px] rounded-lg' src={item} />
+                            <img
+                                key={JSON.stringify(item)}
+                                className='h-[100px] rounded-lg'
+                                src={item}
+                            />
                         ))}
                     </div>
                 )}

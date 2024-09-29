@@ -9,8 +9,8 @@ import Loader from "@/components/shared/Loader";
 import PaginationBar from "@/components/widgets/PaginationBar";
 
 const CategoryPage = () => {
-    const initialState: { menu: {}; products: [] } = { menu: {}, products: [] };
-    const [state, setState] = useState<{ menu: {}; products: [] }>(initialState);
+    const initialState: { menu: object; products: [] } = { menu: {}, products: [] };
+    const [state, setState] = useState<{ menu: object; products: [] }>(initialState);
     const [page, setPage] = useState(1);
     let url: string | null = "";
 

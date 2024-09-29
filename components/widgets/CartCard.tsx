@@ -1,8 +1,6 @@
 import { FeedCardType } from "@/types/dataType";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
-
-import { useStore } from "@/store/stroe";
 
 const CartCard = ({
     item,
@@ -11,8 +9,7 @@ const CartCard = ({
     item: FeedCardType;
     deleteHandler: (item: FeedCardType) => void;
 }) => {
-    const [description, setDescription] = useState("");
-    const [isSelected, setIsSelected] = useState(false);
+    const [isSelected] = useState(false);
 
     function handleDelete() {
         deleteHandler(item);
@@ -26,7 +23,11 @@ const CartCard = ({
                 ) : (
                     <div className='flex w-[50px] overflow-y-scroll no-scrollbar'>
                         {item.images?.map((item) => (
-                            <img className='h-[50px] rounded-lg' src={item} />
+                            <img
+                                key={JSON.stringify(item)}
+                                className='h-[50px] rounded-lg'
+                                src={item}
+                            />
                         ))}
                     </div>
                 )}

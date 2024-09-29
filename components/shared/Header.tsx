@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@/store/stroe";
 import SearchBar from "./SearchBar";
 
-const Header = ({ menu }: { menu?: any }) => {
+const Header = ({ menu }: { menu?: object }) => {
     const [isCartEmpty, setIsCartEmpty] = useState(true);
     const { cart } = useStore();
     const navigator = useRouter();

@@ -49,7 +49,7 @@ const ProductCartPage = () => {
             </div>
             <div className='w-full flex flex-col items-center mt-[80px] gap-[10px]'>
                 {state.map((item) => (
-                    <CartCard deleteHandler={handleDelete} item={item} />
+                    <CartCard key={JSON.stringify(item)} deleteHandler={handleDelete} item={item} />
                 ))}
             </div>
             <div

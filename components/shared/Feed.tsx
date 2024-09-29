@@ -13,7 +13,7 @@ const Feed = ({ products, className }: { products?: FeedCardType[]; className?: 
     return (
         <div className={cn(`w-full flex flex-col items-center mt-[80px] gap-[10px]`, className)}>
             {state?.map((item: FeedCardType) => (
-                <FeedCard item={item} />
+                <FeedCard key={JSON.stringify(item)} item={item} />
             ))}
         </div>
     );
