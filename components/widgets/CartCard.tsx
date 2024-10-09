@@ -21,7 +21,12 @@ const CartCard = ({
                 <div className='relative rounded-xl w-[100px] h-[100px] overflow-x-scroll flex snap-x '>
                     <div className='h-full w-[10px] bg-orange absolute' />
                     {item.images.map((image) => (
-                        <img className='snap-always snap-start' src={image.src} alt={image.alt} />
+                        <img
+                            key={JSON.stringify(image)}
+                            className='snap-always snap-start'
+                            src={image.src}
+                            alt={image.alt}
+                        />
                     ))}
                 </div>
 

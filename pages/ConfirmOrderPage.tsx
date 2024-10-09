@@ -1,14 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useStore } from "@/store/stroe";
 import { useUser } from "@/store/stroe";
 import { useRouter } from "next/navigation";
 import { useTelegram } from "@/hooks/useTelegram";
-import { ProductType } from "@/types/dataType";
-import { postNewOrder } from "@/api/wooComerce";
-import { postNewLead, updateLeadHonorific } from "@/api/bitrix";
-import { sendDataToBot } from "@/api/bot";
+import { updateLeadHonorific } from "@/api/bitrix";
 
 const ConfirmOrderPage = () => {
     const Telegram = useTelegram();
@@ -108,7 +105,7 @@ const ConfirmOrderPage = () => {
                             <h2 className='text-xl text-[#fff] font-bold mt-[10px]'>Товары</h2>
                             <ol className='list-decimal text-start flex flex-col gap-[10px] text-[#3d3d3d]'>
                                 {cart.map((item: any) => (
-                                    <li>{item.name}</li>
+                                    <li key={JSON.stringify(item)}>{item.name}</li>
                                 ))}
                             </ol>
                             <h2 className='text-lg self-end mt-[10px] text-start  text-[#3d3d3d]'>

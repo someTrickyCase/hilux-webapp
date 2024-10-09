@@ -103,7 +103,10 @@ const Menu = ({ className }: { className?: string }) => {
                 ) : (
                     <div className='w-[90%] flex flex-col gap-[10px] font-light overflow-y-scroll'>
                         {categories.map((firstLayerItem) => (
-                            <Accordion type='single' collapsible>
+                            <Accordion
+                                key={JSON.stringify(firstLayerItem)}
+                                type='single'
+                                collapsible>
                                 <AccordionItem className='border-none' value='item-1'>
                                     <AccordionTrigger className='text-lg font-medium'>
                                         {firstLayerItem.name}
@@ -120,6 +123,7 @@ const Menu = ({ className }: { className?: string }) => {
                                         ) : (
                                             firstLayerItem.childrens.map((secondLayerItem) => (
                                                 <p
+                                                    key={JSON.stringify(secondLayerItem)}
                                                     onClick={() =>
                                                         handleCategoryLink(secondLayerItem.id)
                                                     }

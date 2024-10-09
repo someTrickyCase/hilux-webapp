@@ -12,7 +12,7 @@ import Feed from "@/components/shared/Feed";
 const CategoryPage = () => {
     const { categoryID } = useCategoryID();
     const [state, setState] = useState([]);
-    const [page, setPage] = useState("1");
+    const [page] = useState("1");
     const [sortType, setSortType] = useState({ orderby: "price", order: "asc" });
 
     useEffect(() => {
