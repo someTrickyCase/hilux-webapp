@@ -1,10 +1,10 @@
-import CategoryPage from "@/pages/CategoryPage";
+import ShopPage from "@/pages/ShopPage";
 import React from "react";
 
 const page = () => {
     return (
         <div>
-            <CategoryPage />
+            <ShopPage />
         </div>
     );
 };

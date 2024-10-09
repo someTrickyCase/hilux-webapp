@@ -83,10 +83,12 @@ body {
 
 @layer base {
     * {
-        @apply border-border;
+        @apply border-border no-scrollbar;
     }
     body {
         @apply bg-background text-foreground;
+        width: 100vw;
+        overflow-x: hidden;
     }
 }
 
@@ -94,7 +96,13 @@ body {
     -webkit-text-stroke: 1px #c44c0a;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

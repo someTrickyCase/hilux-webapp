@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import FeedCard from "../widgets/FeedCard";
-import { FeedCardType } from "@/types/dataType";
+import { ProductType } from "@/types/dataType";
 import { cn } from "@/lib/utils";
 
-const Feed = ({ products, className }: { products?: FeedCardType[]; className?: string }) => {
+const Feed = ({ products, className }: { products?: ProductType[]; className?: string }) => {
     const [state, setState] = useState(products);
 
     useEffect(() => {
@@ -11,9 +11,9 @@ const Feed = ({ products, className }: { products?: FeedCardType[]; className?: 
     }, [products]);
 
     return (
-        <div className={cn(`w-full flex flex-col items-center mt-[80px] gap-[10px]`, className)}>
-            {state?.map((item: FeedCardType) => (
-                <FeedCard key={JSON.stringify(item)} item={item} />
+        <div className={cn(`w-full flex flex-col items-center mt-[20px] gap-[10px]`, className)}>
+            {state?.map((item: ProductType) => (
+                <FeedCard key={item.id} item={item} />
             ))}
         </div>
     );

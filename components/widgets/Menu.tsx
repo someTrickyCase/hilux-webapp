@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { CategoryType } from "@/types/dataType";
+import { getCategories } from "@/api/wooComerce";
+import { useCategoryID } from "@/store/stroe";
+
 import {
     Sheet,
     SheetClose,
@@ -9,29 +14,70 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "../ui/sheet";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "../ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import Loader from "../shared/Loader";
 
-const Menu = ({ menu, className }: { menu?: any; className?: string }) => {
-    const [state, setState] = useState<any>([]);
+const Menu = ({ className }: { className?: string }) => {
+    const { setCategoryID } = useCategoryID();
+    const navigator = useRouter();
+    const [categories, setCategories] = useState<
+        { name: string; id: number; childrens: { id: number; name: string }[] }[]
+    >([]);
 
     useEffect(() => {
-        const menuRef = [];
-        for (const key in menu) {
-            menuRef.push({ title: key, link: menu[key].link, tabs: menu[key].tabs });
+        const state = localStorage.getItem("menuState");
+        if (state) {
+            setCategories(JSON.parse(state));
         }
-        setState(menuRef);
-    }, [menu]);
+    }, []);
+
+    function handleMenuButtonClick() {
+        if (categories.length !== 0) return;
+
+        const firstLayer: {
+            [key: number]: { name: string; childrens: { id: number; name: string }[] };
+        } = {};
+        const secondLayer: CategoryType[] = [];
+        const state: { name: string; id: number; childrens: { id: number; name: string }[] }[] = [];
+
+        getCategories().then((res) => {
+            res.map((item: CategoryType) => {
+                if (item.parent === 0) {
+                    firstLayer[item.id] = { name: item.name, childrens: [] };
+                } else {
+                    secondLayer.push(item);
+                }
+            });
+            secondLayer.map((item: CategoryType) => {
+                if (firstLayer[item.parent]) {
+                    firstLayer[item.parent].childrens.push({ id: item.id, name: item.name });
+                }
+            });
+            for (const key in firstLayer) {
+                state.push({
+                    name: firstLayer[key].name,
+                    id: +key,
+                    childrens: firstLayer[key].childrens,
+                });
+            }
+            localStorage.setItem("menuState", JSON.stringify(state));
+            setCategories(state);
+        });
+    }
+
+    function handleCategoryLink(id: number) {
+        setCategoryID(id);
+        navigator.push(`/shop/category/${id}`);
+    }
 
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant='link' className={cn("text-white", className)}>
+                <Button
+                    variant='link'
+                    onClick={handleMenuButtonClick}
+                    className={cn("text-white", className)}>
                     <svg
                         width='30'
                         height='30'
@@ -49,35 +95,47 @@ const Menu = ({ menu, className }: { menu?: any; className?: string }) => {
             <SheetContent className='bg-black w-screen border-none flex flex-col items-center'>
                 <SheetHeader>
                     <SheetTitle className='text-orange text-2xl font-bold mb-[20px]'>
-                        Меню
+                        Категории
                     </SheetTitle>
                 </SheetHeader>
-                {/* <SearchBar /> */}
-                <div className='w-[90%] flex flex-col gap-[16px]'>
-                    {state.map((item: any) => (
-                        <Accordion key={JSON.stringify(item)} type='single' collapsible>
-                            <AccordionItem value='item-1' className='border-none mb-[-12px]'>
-                                <AccordionTrigger className='text-2xl font-bold'>
-                                    <a href={item.link}>{item.title}</a>
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                    <div className='flex flex-col'>
-                                        {item.tabs.map((innerItem: any) => (
-                                            <a
-                                                key={JSON.stringify(item)}
-                                                href={innerItem.link}
-                                                className='ml-[10px] mb-[10px] text-lg font-extrabold cursor-pointer hover:text-orange'>
-                                                {innerItem.title}
-                                            </a>
-                                        ))}
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
-                    ))}
-                </div>
+                {categories.length === 0 ? (
+                    <Loader />
+                ) : (
+                    <div className='w-[90%] flex flex-col gap-[10px] font-light overflow-y-scroll'>
+                        {categories.map((firstLayerItem) => (
+                            <Accordion type='single' collapsible>
+                                <AccordionItem className='border-none' value='item-1'>
+                                    <AccordionTrigger className='text-lg font-medium'>
+                                        {firstLayerItem.name}
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        {firstLayerItem.childrens.length === 0 ? (
+                                            <p
+                                                onClick={() =>
+                                                    handleCategoryLink(firstLayerItem.id)
+                                                }
+                                                className='ml-[5px] mb-[5px] hover:text-orange text-[16px]'>
+                                                {firstLayerItem.name}
+                                            </p>
+                                        ) : (
+                                            firstLayerItem.childrens.map((secondLayerItem) => (
+                                                <p
+                                                    onClick={() =>
+                                                        handleCategoryLink(secondLayerItem.id)
+                                                    }
+                                                    className='ml-[5px] mb-[5px] hover:text-orange text-[16px]'>
+                                                    {secondLayerItem.name}
+                                                </p>
+                                            ))
+                                        )}
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
+                        ))}
+                    </div>
+                )}
                 <SheetFooter>
-                    <SheetClose asChild>{/* <p>powered by STC</p> */}</SheetClose>
+                    <SheetClose asChild></SheetClose>
                 </SheetFooter>
             </SheetContent>
         </Sheet>

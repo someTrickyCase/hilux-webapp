@@ -1,25 +1,23 @@
-import { FeedCardType } from "@/types/dataType";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useStore, useProductID } from "@/store/stroe";
+import { useRouter } from "next/navigation";
+import parser from "html-react-parser";
+
 import { Button } from "../ui/button";
+import { ProductType } from "@/types/dataType";
 
-import { useStore } from "@/store/stroe";
+const FeedCard = ({ item }: { item: ProductType }) => {
+    const navigator = useRouter();
 
-const FeedCard = ({ item }: { item: FeedCardType }) => {
-    const [description, setDescription] = useState("");
+    if (item.status !== "publish") return;
+
     const [isSelected, setIsSelected] = useState(false);
     const { cart, addToCart, removeFromCart } = useStore();
+    const { setProductID } = useProductID();
 
     useEffect(() => {
-        const jsonDesc = localStorage.getItem("category-troffi");
-        if (!jsonDesc) return;
-
-        const customDescription = `${
-            jsonDesc.split("/")[4].split("-").join(" ").toUpperCase() + " " + item.title
-        }`;
-        setDescription(customDescription);
-
-        cart.map((cartItem: FeedCardType) => {
-            if (item.article === cartItem.article) setIsSelected(true);
+        cart.map((cartItem: ProductType) => {
+            if (item.sku === cartItem.sku) setIsSelected(true);
         });
     }, []);
 
@@ -34,33 +32,44 @@ const FeedCard = ({ item }: { item: FeedCardType }) => {
         }
     }
 
+    function handleShowProduct() {
+        setProductID(item.id);
+        navigator.push(`/shop/${item.slug}`);
+    }
+
     return (
         <div className='flex flex-col w-[80%] gap-[10px] mb-[20px] bg-[#fff]/[0.03] py-[40px] px-[20px] rounded-2xl'>
-            <div className='flex justify-between border-l-[8px] border-l-orange rounded-2xl'>
-                {typeof item.images === "string" ? (
-                    <img className='h-[100px] rounded-lg' src={item.images} alt={item.title} />
-                ) : (
-                    <div className='flex w-[100px] overflow-y-scroll no-scrollbar'>
-                        {item.images?.map((item) => (
-                            <img
-                                key={JSON.stringify(item)}
-                                className='h-[100px] rounded-lg'
-                                src={item}
-                            />
-                        ))}
-                    </div>
-                )}
-
+            <div className='flex justify-between'>
+                <div className='relative rounded-xl w-[100px] h-[100px] overflow-x-scroll flex snap-x '>
+                    <div className='h-full w-[10px] bg-orange absolute' />
+                    {item.images.map((image) => (
+                        <img
+                            key={JSON.stringify(image)}
+                            className='snap-always snap-start'
+                            src={image.src}
+                            alt={image.alt}
+                        />
+                    ))}
+                </div>
                 <div className=' text-sm font-light flex flex-col justify-between'>
                     <div>
                         <p>Артикул:</p>
-                        <p>{item.article}</p>
+                        <p>{item.sku}</p>
                     </div>
                     <p className='text-orange text-2xl font-black '>{item.price} руб</p>
                 </div>
             </div>
-            <h2 className='text-xl font-bold'>{item.title}</h2>
-            <p className='text-sm font-light'>{item.description || description}</p>
+            <h2 className='text-xl font-bold'>{item.name}</h2>
+            <div className='text-sm font-light'>{parser(item.short_description)}</div>
+
+            <Button asChild>
+                <div
+                    onClick={handleShowProduct}
+                    className='text-xl h-[50px] !bg-black !text-orange'>
+                    Подробнее
+                </div>
+            </Button>
+
             <Button asChild>
                 <div
                     onClick={handleSelect}

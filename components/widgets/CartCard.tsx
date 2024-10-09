@@ -1,4 +1,4 @@
-import { FeedCardType } from "@/types/dataType";
+import { ProductType } from "@/types/dataType";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 
@@ -6,8 +6,8 @@ const CartCard = ({
     item,
     deleteHandler,
 }: {
-    item: FeedCardType;
-    deleteHandler: (item: FeedCardType) => void;
+    item: ProductType;
+    deleteHandler: (item: ProductType) => void;
 }) => {
     const [isSelected] = useState(false);
 
@@ -17,21 +17,15 @@ const CartCard = ({
 
     return (
         <div className='flex flex-col w-[90%] gap-[10px] mb-[10px] bg-[#fff]/[0.03] py-[10px] px-[20px] rounded-2xl'>
-            <div className='flex gap-[12px] border-l-[4px] border-l-orange rounded-xl'>
-                {typeof item.images === "string" ? (
-                    <img className='h-[50px] rounded-lg' src={item.images} alt={item.title} />
-                ) : (
-                    <div className='flex w-[50px] overflow-y-scroll no-scrollbar'>
-                        {item.images?.map((item) => (
-                            <img
-                                key={JSON.stringify(item)}
-                                className='h-[50px] rounded-lg'
-                                src={item}
-                            />
-                        ))}
-                    </div>
-                )}
-                <h2 className='text-sm font-bold'>{item.title}</h2>
+            <div className='flex gap-[12px] justify-between'>
+                <div className='relative rounded-xl w-[100px] h-[100px] overflow-x-scroll flex snap-x '>
+                    <div className='h-full w-[10px] bg-orange absolute' />
+                    {item.images.map((image) => (
+                        <img className='snap-always snap-start' src={image.src} alt={image.alt} />
+                    ))}
+                </div>
+
+                <h2 className='text-sm font-bold w-[200px]'>{item.name}</h2>
             </div>
             <div className=' text-sm font-light flex justify-between px-[10px]'>
                 <p className='text-orange text-lg font-black '>{item.price} руб</p>

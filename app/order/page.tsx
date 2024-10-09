@@ -1,10 +1,12 @@
 import { TelegramProvider } from "@/hooks/useTelegram";
-import HomePage from "@/pages/HomePage";
+import OrderPage from "@/pages/OrderPage";
 
-export default function Home() {
+const page = () => {
     return (
         <TelegramProvider>
-            <HomePage />
+            <OrderPage />
         </TelegramProvider>
     );
-}
+};
+
+export default page;

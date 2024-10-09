@@ -1,34 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProductsInCategory } from "@/api/wooComerce";
-import { useCategoryID } from "@/store/stroe";
+import { getProductsList } from "@/api/wooComerce";
 
 import Header from "@/components/shared/Header";
-import Loader from "@/components/shared/Loader";
-import SortTypeSelector from "@/components/widgets/SortTypeSelector";
 import Feed from "@/components/shared/Feed";
+import SortTypeSelector from "@/components/widgets/SortTypeSelector";
+import Loader from "@/components/shared/Loader";
+import PaginationBar from "@/components/widgets/PaginationBar";
 
-const CategoryPage = () => {
-    const { categoryID } = useCategoryID();
+const ShopPage = () => {
     const [state, setState] = useState([]);
-    const [page, setPage] = useState("1");
     const [sortType, setSortType] = useState({ orderby: "price", order: "asc" });
+    const [page, setPage] = useState("1");
 
     useEffect(() => {
         scrollTo({
             top: 0,
             behavior: "smooth",
         });
-        getProductsInCategory(categoryID, {
+        setState([]);
+        getProductsList({
             orderby: sortType.orderby,
             order: sortType.order,
             page: page,
-            perPage: "100",
-        }).then((res) => {
-            setState(res);
-        });
-    }, [sortType, page, categoryID]);
+            perPage: "20",
+        }).then((res) => setState(res));
+    }, [sortType, page]);
 
     function hadleSortTypeSelecting(sortTypeString: string) {
         switch (sortTypeString) {
@@ -44,19 +42,26 @@ const CategoryPage = () => {
         }
     }
 
+    function changePage(page: number) {
+        setPage(page.toString());
+    }
+
     return (
         <div>
-            <Header navigateBack={true} />
+            <Header />
             <SortTypeSelector callback={hadleSortTypeSelecting} />
-            {state.length === 0 ? (
-                <Loader />
-            ) : (
-                <div>
-                    <Feed products={state} />
-                </div>
-            )}
+            <div>
+                {state.length === 0 ? (
+                    <Loader />
+                ) : (
+                    <div>
+                        <Feed products={state} />
+                        <PaginationBar curPage={+page} handleChangePage={changePage} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
 
-export default CategoryPage;
+export default ShopPage;
