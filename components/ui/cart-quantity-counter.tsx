@@ -27,7 +27,7 @@ const CartCounter = ({
                 setState({ quantity: cartItem.quantity });
             }
         });
-    }, []);
+    }, [cart,  item.sku]);
 
     function onDelete() {
         handleDelete();

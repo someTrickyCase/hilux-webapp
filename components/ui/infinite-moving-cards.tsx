@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { ProductType } from "@/types/dataType";
 
 import { Button } from "./button";
+import Image from "next/image";
 
 export const InfiniteMovingCards = ({
     items,
@@ -28,6 +29,7 @@ export const InfiniteMovingCards = ({
 
     useEffect(() => {
         addAnimation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const [start, setStart] = useState(false);
     function addAnimation() {
@@ -93,11 +95,17 @@ export const InfiniteMovingCards = ({
                             <div className='w-full flex justify-between mb-[20px]'>
                                 <div className='relative w-[120px] h-[120px] rounded-lg overflow-hidden'>
                                     <div className='bg-orange w-[5px] h-[120px] absolute' />
-                                    <img
+                                    <Image
+                                        src={item.images[0].src}
+                                        alt={item.images[0].alt}
+                                        width={120}
+                                        height={120}
+                                    />
+                                    {/* <img
                                         className='w-[120px]'
                                         src={item.images[0].src}
                                         alt={item.images[0].alt}
-                                    />
+                                    /> */}
                                 </div>
                                 <div className='flex flex-col justify-between'>
                                     <div className='flex flex-col items-start text-sm font-light'>

@@ -20,7 +20,7 @@ const PaginationBar = ({
 
     useEffect(() => {
         setPage(curPage);
-    }, []);
+    }, [curPage]);
 
     function handlePagination(delta: number) {
         setPage((prev: any) => {

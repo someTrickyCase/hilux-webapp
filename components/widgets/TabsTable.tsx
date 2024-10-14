@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import parser from "html-react-parser";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Button } from "../ui/button";
+
 
 const TabsTable = ({ className, description }: { className?: string; description: string }) => {
     function validateHTML() {
@@ -11,11 +11,6 @@ const TabsTable = ({ className, description }: { className?: string; description
         } else {
             return parser(description);
         }
-    }
-
-    function handleClick() {
-        // TODO leave queary
-        console.log("NOT EMPLEMENTED!!!!");
     }
 
     return (

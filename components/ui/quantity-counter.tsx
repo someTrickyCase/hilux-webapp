@@ -20,7 +20,7 @@ const Counter = ({ item, className }: { item: ProductType; className?: string })
                 setState({ isSelected: true, quantity: cartItem.quantity });
             }
         });
-    }, []);
+    }, [cart, item.sku]);
 
     function handleSelect() {
         if (state.isSelected) {

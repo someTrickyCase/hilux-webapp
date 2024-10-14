@@ -7,6 +7,7 @@ import { getProductsList } from "@/api/wooComerce";
 import { Button } from "../ui/button";
 import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 import Loader from "../shared/Loader";
+import Image from "next/image";
 
 const SectionAbout = () => {
     const navigator = useRouter();
@@ -51,11 +52,18 @@ const SectionAbout = () => {
         <div className='w-full flex flex-col items-center no-scrollbar min-h-fit'>
             <section className='h-screen w-full flex flex-col items-center'>
                 <div className='flex items-center justify-center h-[90vh]'>
-                    <img
+                    <Image
+                        src='/hilux_photo.webp'
+                        className='object-cover h-[95vh] absolute -z-10'
+                        alt='hilux_photo'
+                        width={1600}
+                        height={900}
+                    />
+                    {/* <img
                         className='object-cover h-[95vh] absolute -z-10'
                         src='hilux_photo.webp'
                         alt='hilux_photo'
-                    />
+                    /> */}
                     <div className='w-full px-[10px] flex items-center justify-center absolute top-[80px] bg-orange/[0.6]'>
                         <h2 className='cursor-default text-[35px] font-medium'>
                             Специализированный магазин тюнинга для <span>Toyota Hilux</span>

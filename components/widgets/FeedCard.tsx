@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useStore, useProductID } from "@/store/stroe";
+import { useProductID } from "@/store/stroe";
 import { useRouter } from "next/navigation";
 import parser from "html-react-parser";
 
 import { Button } from "../ui/button";
 import { ProductType } from "@/types/dataType";
 import Counter from "../ui/quantity-counter";
+import Image from "next/image";
 
 const FeedCard = ({ item }: { item: ProductType }) => {
     const navigator = useRouter();
@@ -20,17 +20,25 @@ const FeedCard = ({ item }: { item: ProductType }) => {
     }
 
     return (
-        <div className='flex flex-col w-[80%] gap-[10px] mb-[20px] bg-[#fff]/[0.03] py-[40px] px-[20px] rounded-2xl'>
+        <div className='justify-self-center flex flex-col w-[300px] h-[418px] gap-[10px] mb-[20px] bg-[#fff]/[0.03] py-[40px] px-[20px] rounded-2xl'>
             <div className='flex justify-between'>
                 <div className='relative rounded-xl w-[100px] h-[100px] overflow-x-scroll flex snap-x '>
                     <div className='h-full w-[10px] bg-orange absolute' />
                     {item.images.map((image) => (
-                        <img
+                        <Image
                             key={JSON.stringify(image)}
                             className='snap-always snap-start'
                             src={image.src}
                             alt={image.alt}
+                            width={150}
+                            height={50}
                         />
+                        // <img
+                        //     key={JSON.stringify(image)}
+                        //     className='snap-always snap-start'
+                        //     src={image.src}
+                        //     alt={image.alt}
+                        // />
                     ))}
                 </div>
                 <div className=' text-sm font-light flex flex-col justify-between'>
@@ -41,7 +49,7 @@ const FeedCard = ({ item }: { item: ProductType }) => {
                     <p className='text-orange text-2xl font-black '>{item.price} руб</p>
                 </div>
             </div>
-            <h2 className='text-xl font-bold'>{item.name}</h2>
+            <h2 className='text-xl font-bold h-[85px] overflow-hidden'>{item.name}</h2>
             <div className='text-sm font-light'>{parser(item.short_description)}</div>
 
             <Button asChild>

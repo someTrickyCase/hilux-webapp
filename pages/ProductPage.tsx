@@ -9,16 +9,16 @@ import parser from "html-react-parser";
 import Header from "@/components/shared/Header";
 import Loader from "@/components/shared/Loader";
 import TabsTable from "@/components/widgets/TabsTable";
-import { Button } from "@/components/ui/button";
 import Counter from "@/components/ui/quantity-counter";
 import Footer from "@/components/shared/Footer";
+import Image from "next/image";
 
 const ProductPage = () => {
     const { productID } = useProductID();
     const [product, setProduct] = useState<ProductType>();
 
-    const [isSelected, setIsSelected] = useState(false);
-    const { cart, addToCart, removeFromCart } = useStore();
+    const [, setIsSelected] = useState(false);
+    const { cart } = useStore();
 
     useEffect(() => {
         getProduct(productID).then((res) => setProduct(res));
@@ -26,18 +26,8 @@ const ProductPage = () => {
         cart.map((cartItem: ProductType) => {
             if (productID === cartItem.id) setIsSelected(true);
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    function handleSelect() {
-        if (isSelected) {
-            removeFromCart(product);
-            setIsSelected(false);
-        }
-        if (!isSelected) {
-            addToCart(product);
-            setIsSelected(true);
-        }
-    }
 
     return (
         <div>
@@ -48,12 +38,20 @@ const ProductPage = () => {
                         <div className='relative rounded-xl mx-[20px] overflow-x-scroll flex snap-x'>
                             <div className='h-full w-[10px] bg-orange absolute' />
                             {product?.images.map((image) => (
-                                <img
+                                <Image
+                                    width={300}
+                                    height={300}
                                     key={JSON.stringify(image)}
-                                    className='h-[300px] snap-always snap-start'
-                                    src={image.src}
                                     alt={image.alt}
+                                    src={image.src}
+                                    className='h-[300px] snap-always snap-start'
                                 />
+                                // <img
+                                //     key={JSON.stringify(image)}
+                                //     className='h-[300px] snap-always snap-start'
+                                //     src={image.src}
+                                //     alt={image.alt}
+                                // />
                             ))}
                         </div>
                     </div>

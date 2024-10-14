@@ -1,7 +1,10 @@
+const BITRIX_KEY = process.env.BITRIX_KEY;
+
 export const postNewLead = async (data: any) => {
     try {
+        console.log(BITRIX_KEY);
         const res = await fetch(
-            "https://troffi.bitrix24.ru/rest/253/8qh76a58yasowacf/crm.lead.add.json/",
+            `https://troffi.bitrix24.ru/rest/253/${BITRIX_KEY}/crm.lead.add.json/`,
             {
                 method: "post",
                 headers: {
@@ -19,7 +22,7 @@ export const postNewLead = async (data: any) => {
 export const updateProductRowsInLead = async (id: number, productRows: any) => {
     try {
         const res = await fetch(
-            `https://troffi.bitrix24.ru/rest/253/8qh76a58yasowacf/crm.lead.productrows.set/?id=${id}`,
+            `https://troffi.bitrix24.ru/rest/253/${BITRIX_KEY}/crm.lead.productrows.set/?id=${id}`,
             {
                 method: "post",
                 headers: {
@@ -37,7 +40,7 @@ export const updateProductRowsInLead = async (id: number, productRows: any) => {
 export const updateLeadHonorific = async (id: number) => {
     try {
         const res = await fetch(
-            `https://troffi.bitrix24.ru/rest/253/8qh76a58yasowacf/crm.lead.productrows.set/?id=${id}`,
+            `https://troffi.bitrix24.ru/rest/253/${BITRIX_KEY}/crm.lead.productrows.set/?id=${id}`,
             {
                 method: "post",
                 headers: {

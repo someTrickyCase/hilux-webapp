@@ -7,6 +7,7 @@ import { ProductType } from "@/types/dataType";
 
 import CartCard from "@/components/widgets/CartCard";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const ProductCartPage = () => {
     const { cart, removeFromCart } = useStore();
@@ -15,6 +16,7 @@ const ProductCartPage = () => {
 
     useEffect(() => {
         setState(cart);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cart.length]);
 
     function getTotalPrice() {
@@ -62,13 +64,26 @@ const ProductCartPage = () => {
                 className={`${
                     state.length === 0 ? "block" : "hidden"
                 } w-full h-[90vh] flex items-center justify-center flex-col gap-[20px]`}>
-                <img className='grayscale opacity-[0.2] filter  h-[80px]' src='logo.png' alt='' />
+                <Image
+                    width={120}
+                    height={80}
+                    className='grayscale opacity-[0.2] filter  h-[80px]'
+                    src='/logo.png'
+                    alt='logo'
+                />
+                {/* <img className='grayscale opacity-[0.2] filter  h-[80px]' src='logo.png' alt='' /> */}
                 <p className='text-[#222222] uppercase font-bold'>Корзина пуста</p>
             </div>
             <div className='w-full flex flex-col items-center mt-[20px] gap-[10px]'>
-                {state.map((item) => (
-                    <CartCard key={JSON.stringify(item)} deleteHandler={handleDelete} item={item} />
-                ))}
+                <div className='w-[80%] flex flex-col items-center mt-[20px] gap-[10px] md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
+                    {state.map((item) => (
+                        <CartCard
+                            key={JSON.stringify(item)}
+                            deleteHandler={handleDelete}
+                            item={item}
+                        />
+                    ))}
+                </div>
                 <div
                     className={`${
                         state.length === 0 ? "hidden" : "block"

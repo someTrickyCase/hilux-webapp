@@ -6,6 +6,7 @@ import { useStore } from "@/store/stroe";
 
 import Menu from "../widgets/Menu";
 import SearchBar from "./SearchBar";
+import Image from "next/image";
 
 const Header = ({ navigateBack }: { navigateBack?: boolean }) => {
     const [isCartEmpty, setIsCartEmpty] = useState(true);
@@ -15,7 +16,7 @@ const Header = ({ navigateBack }: { navigateBack?: boolean }) => {
     useEffect(() => {
         if (cart.length !== 0) setIsCartEmpty(false);
         if (cart.length === 0) setIsCartEmpty(true);
-    });
+    }, [cart.length]);
 
     function handleLogo() {
         navigator.push("/");
@@ -48,11 +49,18 @@ const Header = ({ navigateBack }: { navigateBack?: boolean }) => {
                 </div>
             ) : (
                 <div onClick={handleLogo} className='flex items-center gap-[4px]'>
-                    <img
+                    <Image
+                        width={55}
+                        height={35}
+                        role='presentation'
+                        src={"/logo.png"}
+                        alt='toyota-logo'
+                    />
+                    {/* <img
                         className='h-[35px] flex items-center justify-center'
                         src='/logo.png'
                         alt='logo'
-                    />
+                    /> */}
                     <p className='text-xl font-[600]'>Hilux Toyota</p>
                 </div>
             )}

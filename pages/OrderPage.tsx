@@ -11,10 +11,12 @@ import { postNewOrder } from "@/api/wooComerce";
 import { useTelegram } from "@/hooks/useTelegram";
 import { postNewLead, updateProductRowsInLead } from "@/api/bitrix";
 import Footer from "@/components/shared/Footer";
+import Image from "next/image";
 
 const OrderPage = () => {
     const Telegram = useTelegram();
     const { setUser } = useUser();
+    const { cart } = useStore();
     const [isAllert, setIsAllert] = useState(false);
 
     const navigator = useRouter();
@@ -23,8 +25,7 @@ const OrderPage = () => {
     const refInputEmail: React.RefObject<HTMLInputElement> = useRef(null);
     const refInputNote: React.RefObject<HTMLTextAreaElement> = useRef(null);
 
-    const { cart } = useStore();
-    const { user } = useUser();
+    // const { user } = useUser();
 
     function getTotalPrice() {
         let totalPrice: number = 0;
@@ -65,7 +66,7 @@ const OrderPage = () => {
                     COMMENTS: note,
                     HONORIFIC: "hilux-web-app",
                     SOURCE_DESCRIPTION: "hilux-web-app",
-                    STATUS_DESCRIPTION: "В обработке",
+                    UF_CRM_1728573871: "Мы получили и обрабатываем Ваш заказ",
                     TITLE: `${name} hilux-bot`,
                     NAME: name,
                     OPPORTUNITY: getTotalPrice(),
@@ -74,8 +75,16 @@ const OrderPage = () => {
                 },
             };
             postNewLead(leadData).then((res) => {
-                bitrixID = +res.result;
-                updateProductRowsInLead(+res.result, { ROWS: bitrixProductRows });
+                console.log(res, leadData, "BITRIX RES");
+                if (res.result) {
+                    bitrixID = +res.result;
+                    updateProductRowsInLead(+res.result, { ROWS: bitrixProductRows });
+                } else {
+                    setIsAllert(true);
+                    setTimeout(() => {
+                        setIsAllert(false);
+                    }, 2000);
+                }
             });
 
             // make WC order
@@ -84,24 +93,25 @@ const OrderPage = () => {
                 origin: "tg-bot-hilux",
                 payment_method: "после получения",
                 billing: {
-                    first_name: user.name,
-                    phone: user.phone,
-                    email: user.email,
+                    first_name: name,
+                    phone: phone,
+                    email: email,
                 },
                 line_items: [...productsID],
             };
 
             postNewOrder(orderData).then((res) => {
-                if (res.status === 400) {
+                console.log(res, orderData, "WC RES");
+                if (!res.id) {
                     setIsAllert(true);
                     setTimeout(() => {
                         setIsAllert(false);
                     }, 2000);
                 } else {
                     setUser({ bitrixID, orderID: res.id, queryID, name, phone, email, note });
+                    navigator.push("/order/new");
                 }
             });
-            navigator.push("/order/new");
         } else {
             setIsAllert(true);
             setTimeout(() => {
@@ -127,7 +137,14 @@ const OrderPage = () => {
                     </svg>
                     <p className='text-xl font-[600]'>Hilux Toyota</p>
                 </div>
-                <img src='/logo.png' className='h-[35px]' alt='toyota_logo' />
+                <Image
+                    src='/logo.png'
+                    width={50}
+                    height={35}
+                    className='h-[35px]'
+                    alt='toyota_logo'
+                />
+                {/* <img src='/logo.png' className='h-[35px]' alt='toyota_logo' /> */}
             </div>
             <h1 className='w-full flex justify-center mt-[20px] mb-[20px] text-2xl font-extrabold text-orange'>
                 Детали заказа

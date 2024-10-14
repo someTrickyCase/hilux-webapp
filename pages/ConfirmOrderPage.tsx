@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useTelegram } from "@/hooks/useTelegram";
 import { updateLeadHonorific } from "@/api/bitrix";
 
+import Image from "next/image";
+
 const ConfirmOrderPage = () => {
     const Telegram = useTelegram();
     const navigator = useRouter();
@@ -35,6 +37,7 @@ const ConfirmOrderPage = () => {
         return () => {
             Telegram.webApp?.offEvent("mainButtonClicked", onSendData);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onSendData]);
 
     function getTotalPrice() {
@@ -66,7 +69,14 @@ const ConfirmOrderPage = () => {
                     </svg>
                     <p className='text-xl font-[600]'>Hilux Toyota</p>
                 </div>
-                <img src='/logo.png' className='h-[35px]' alt='toyota_logo' />
+                <Image
+                    src='/logo.png'
+                    className='h-[35px]'
+                    width={50}
+                    height={35}
+                    alt='toyota_logo'
+                />
+                {/* <img src='/logo.png' className='h-[35px]' alt='toyota_logo' /> */}
             </div>
             <div className='bg-black border-t-[1px] border-t-orange'>
                 <div className='flex flex-col items-center px-[20px] mt-[10px]'>

@@ -11,10 +11,12 @@ const Feed = ({ products, className }: { products?: ProductType[]; className?: s
     }, [products]);
 
     return (
-        <div className={cn(`w-full flex flex-col items-center mt-[20px] gap-[10px]`, className)}>
-            {state?.map((item: ProductType) => (
-                <FeedCard key={item.id} item={item} />
-            ))}
+        <div className={cn(`w-full flex items-center justify-center`, className)}>
+            <div className='w-[80%] flex flex-col items-center mt-[20px] gap-[10px] md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
+                {state?.map((item: ProductType) => (
+                    <FeedCard key={item.id} item={item} />
+                ))}
+            </div>
         </div>
     );
 };

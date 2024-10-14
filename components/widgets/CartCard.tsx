@@ -1,7 +1,6 @@
 import { ProductType } from "@/types/dataType";
-import React, { useState } from "react";
-import { Button } from "../ui/button";
 import CartCounter from "../ui/cart-quantity-counter";
+import Image from "next/image";
 
 const CartCard = ({
     item,
@@ -10,24 +9,30 @@ const CartCard = ({
     item: ProductType;
     deleteHandler: (item: ProductType) => void;
 }) => {
-    const [isSelected] = useState(false);
-
     function onDelete() {
         deleteHandler(item);
     }
 
     return (
-        <div className='flex flex-col w-[90%] gap-[10px] mb-[10px] bg-[#fff]/[0.03] py-[10px] px-[20px] rounded-2xl'>
+        <div className='flex flex-col w-[300px] gap-[10px] mb-[10px] bg-[#fff]/[0.03] py-[10px] px-[20px] rounded-2xl justify-self-center'>
             <div className='flex gap-[12px] justify-between'>
-                <div className='relative rounded-xl w-[100px] h-[100px] overflow-x-scroll flex snap-x '>
+                <div className='relative rounded-xl overflow-x-scroll flex snap-x '>
                     <div className='h-full w-[10px] bg-orange absolute' />
                     {item.images.map((image) => (
-                        <img
+                        <Image
                             key={JSON.stringify(image)}
                             className='snap-always snap-start'
                             src={image.src}
                             alt={image.alt}
+                            width={100}
+                            height={100}
                         />
+                        // <img
+                        //     key={JSON.stringify(image)}
+                        //     className='snap-always snap-start'
+                        //     src={image.src}
+                        //     alt={image.alt}
+                        // />
                     ))}
                 </div>
 
