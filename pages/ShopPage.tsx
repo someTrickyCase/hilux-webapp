@@ -8,6 +8,7 @@ import Feed from "@/components/shared/Feed";
 import SortTypeSelector from "@/components/widgets/SortTypeSelector";
 import Loader from "@/components/shared/Loader";
 import PaginationBar from "@/components/widgets/PaginationBar";
+import Footer from "@/components/shared/Footer";
 
 const ShopPage = () => {
     const [state, setState] = useState([]);
@@ -57,6 +58,7 @@ const ShopPage = () => {
                     <div>
                         <Feed products={state} />
                         <PaginationBar curPage={+page} handleChangePage={changePage} />
+                        <Footer />
                     </div>
                 )}
             </div>

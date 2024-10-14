@@ -11,12 +11,13 @@
     :root {
         --background: #111;
         --foreground: #ccc;
+        --tg-theme-bg-color: #111 !important;
     }
 }
 
 body {
-    color: var(--foreground);
-    background: var(--background);
+    color: #ccc !important;
+    background-color: #111 !important;
 }
 
 @layer utilities {
@@ -27,6 +28,8 @@ body {
 
 @layer base {
     :root {
+        --white: #ccc;
+        --black: #111;
         --background: 0 0% 100%;
         --foreground: 240 10% 3.9%;
         --card: 0 0% 100%;
@@ -92,10 +95,9 @@ body {
     }
 }
 
-.text-stroke {
-    -webkit-text-stroke: 1px #c44c0a;
+.inherit {
+    font-family: inherit !important;
 }
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
     display: none;

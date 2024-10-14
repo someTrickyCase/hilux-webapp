@@ -32,7 +32,9 @@ const SearchBar = () => {
                     ref={inputRef}
                     placeholder='Что ищем?'
                     type='text'
-                    className='placeholder:text-[#3d3d3d] flex items-center pl-[10px] z-20 w-full border-none outline-none bg-transparent'
+                    className={`${
+                        !isActive ? "hidden" : undefined
+                    } pointer-events-auto inherit placeholder:text-[#3d3d3d] flex items-center pl-[10px] z-20 w-full border-none outline-none bg-transparent`}
                 />
             </div>
             <div

@@ -10,6 +10,7 @@ import { ProductType } from "@/types/dataType";
 import { postNewOrder } from "@/api/wooComerce";
 import { useTelegram } from "@/hooks/useTelegram";
 import { postNewLead, updateProductRowsInLead } from "@/api/bitrix";
+import Footer from "@/components/shared/Footer";
 
 const OrderPage = () => {
     const Telegram = useTelegram();
@@ -53,17 +54,18 @@ const OrderPage = () => {
                     PRODUCT_ID: item.id.toString(),
                     PRODUCT_NAME: `https://hiluxtoyota.ru/product/${item.slug}/`,
                     PRICE: item.price,
-                    QUANTITY: 1,
+                    QUANTITY: item.quantity,
                 });
             });
 
             // make bitrix lead
-
+            let bitrixID: number;
             const leadData = {
                 fields: {
                     COMMENTS: note,
                     HONORIFIC: "hilux-web-app",
                     SOURCE_DESCRIPTION: "hilux-web-app",
+                    STATUS_DESCRIPTION: "В обработке",
                     TITLE: `${name} hilux-bot`,
                     NAME: name,
                     OPPORTUNITY: getTotalPrice(),
@@ -72,6 +74,7 @@ const OrderPage = () => {
                 },
             };
             postNewLead(leadData).then((res) => {
+                bitrixID = +res.result;
                 updateProductRowsInLead(+res.result, { ROWS: bitrixProductRows });
             });
 
@@ -95,8 +98,7 @@ const OrderPage = () => {
                         setIsAllert(false);
                     }, 2000);
                 } else {
-                    console.log(res.id);
-                    setUser({ orderID: res.id, queryID, name, phone, email, note });
+                    setUser({ bitrixID, orderID: res.id, queryID, name, phone, email, note });
                 }
             });
             navigator.push("/order/new");
@@ -183,8 +185,8 @@ const OrderPage = () => {
                     />
                 </div>
                 <p className='text-sm font-light mt-[5px]'>
-                    * после форормления заказа наш мененджер свяжется с Вами в ближайшее рабочее
-                    время
+                    <span className='text-lg text-orange'>*</span> после форормления заказа наш
+                    мененджер свяжется с Вами в ближайшее рабочее время
                 </p>
             </div>
             <div className='h-fit ml-[20px] mt-[30px]'>
@@ -194,6 +196,7 @@ const OrderPage = () => {
                     </div>
                 </Button>
             </div>
+            <Footer className='absolute top-[100vh]' />
             {isAllert ? <Allert /> : null}
         </div>
     );

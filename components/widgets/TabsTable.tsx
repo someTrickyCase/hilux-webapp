@@ -43,9 +43,10 @@ const TabsTable = ({ className, description }: { className?: string; description
                             <li>Особенности регистрации этого вида изменений</li>
                         </ul>
                     </div>
-                    <Button asChild className='text-lg h-[50px] bg-orange'>
-                        <div onClick={handleClick}>Оставить заявку</div>
-                    </Button>
+                    <p className='text-sm'>
+                        <span className='text-orange text-xl'>* </span> Оставить заявку на
+                        проведение экспертизы Вы можете воспользовавшись контекстным меню бота
+                    </p>
                 </TabsContent>
             </Tabs>
         </div>

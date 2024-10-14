@@ -5,32 +5,14 @@ import parser from "html-react-parser";
 
 import { Button } from "../ui/button";
 import { ProductType } from "@/types/dataType";
+import Counter from "../ui/quantity-counter";
 
 const FeedCard = ({ item }: { item: ProductType }) => {
     const navigator = useRouter();
 
     if (item.status !== "publish") return;
 
-    const [isSelected, setIsSelected] = useState(false);
-    const { cart, addToCart, removeFromCart } = useStore();
     const { setProductID } = useProductID();
-
-    useEffect(() => {
-        cart.map((cartItem: ProductType) => {
-            if (item.sku === cartItem.sku) setIsSelected(true);
-        });
-    }, []);
-
-    function handleSelect() {
-        if (isSelected) {
-            removeFromCart(item);
-            setIsSelected(false);
-        }
-        if (!isSelected) {
-            addToCart(item);
-            setIsSelected(true);
-        }
-    }
 
     function handleShowProduct() {
         setProductID(item.id);
@@ -65,20 +47,13 @@ const FeedCard = ({ item }: { item: ProductType }) => {
             <Button asChild>
                 <div
                     onClick={handleShowProduct}
-                    className='text-xl h-[50px] !bg-black !text-orange'>
+                    className='cursor-pointer text-xl h-[50px] !bg-black !text-orange'>
                     Подробнее
                 </div>
             </Button>
-
-            <Button asChild>
-                <div
-                    onClick={handleSelect}
-                    className={`cursor-pointer text-white text-xl font-extrabold h-[50px] hover:text-orange hover:!bg-black ${
-                        isSelected ? "!bg-black text-orange" : "!bg-orange text-white"
-                    }`}>
-                    {isSelected ? "Добавлено" : "В корзину"}
-                </div>
-            </Button>
+            <div className='flex justify-between gap-[10px]'>
+                <Counter item={item} />
+            </div>
         </div>
     );
 };

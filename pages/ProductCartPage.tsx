@@ -15,26 +15,29 @@ const ProductCartPage = () => {
 
     useEffect(() => {
         setState(cart);
-    }, [cart]);
+    }, [cart.length]);
 
     function getTotalPrice() {
         let totalPrice: number = 0;
         state.map((item) => {
-            totalPrice += +item.price;
+            totalPrice += item.quantity ? +item.price * item.quantity : +item.price;
         });
         return totalPrice;
     }
 
     function handleDelete(item: ProductType) {
         removeFromCart(item);
+        return;
     }
 
     function handleOrder() {
         navigator.push("/order");
+        return;
     }
 
     function handleButtonBack() {
         navigator.back();
+        return;
     }
 
     return (

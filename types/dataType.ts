@@ -52,6 +52,7 @@ export type ProductType = {
     price_html: string;
     purchasable: boolean;
     purchase_note: string;
+    quantity?: number;
     rating_count: number;
     regular_price: string;
     related_ids: [];
@@ -103,4 +104,5 @@ export type UserType = {
     email?: string;
     note?: string;
     orderID?: number;
+    bitrixID?: number;
 };

@@ -1,6 +1,7 @@
 import { ProductType } from "@/types/dataType";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
+import CartCounter from "../ui/cart-quantity-counter";
 
 const CartCard = ({
     item,
@@ -11,7 +12,7 @@ const CartCard = ({
 }) => {
     const [isSelected] = useState(false);
 
-    function handleDelete() {
+    function onDelete() {
         deleteHandler(item);
     }
 
@@ -32,17 +33,11 @@ const CartCard = ({
 
                 <h2 className='text-sm font-bold w-[200px]'>{item.name}</h2>
             </div>
-            <div className=' text-sm font-light flex justify-between px-[10px]'>
-                <p className='text-orange text-lg font-black '>{item.price} руб</p>
-                <Button asChild>
-                    <div
-                        onClick={handleDelete}
-                        className={`cursor-pointer !bg-orange text-md font-extrabold h-[30px] hover:text-orange hover:!bg-black ${
-                            isSelected ? "!bg-black !text-orange" : undefined
-                        }`}>
-                        Удалить
-                    </div>
-                </Button>
+            <div className=' text-sm font-light flex justify-between items-center px-[10px]'>
+                <p className='text-orange text-xl font-black '>
+                    {item.quantity ? +item.price * item.quantity : item.price} руб
+                </p>
+                <CartCounter handleDelete={onDelete} item={item} />
             </div>
         </div>
     );

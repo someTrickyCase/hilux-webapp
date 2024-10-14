@@ -6,6 +6,16 @@ export const useStore = create<ProductType & any>()(
     persist(
         (set, get) => ({
             cart: [],
+            setProductQuantity: (quantity: number, item: ProductType) => {
+                const cartItem = get().cart.find(
+                    (oldItem: ProductType) => oldItem.sku === item.sku
+                );
+                cartItem.quantity = quantity;
+                const filteredCart = get().cart.filter(
+                    (oldItem: ProductType) => oldItem.sku !== item.sku
+                );
+                set({ cart: [...filteredCart, cartItem] });
+            },
             addToCart: (newProduct: ProductType) => {
                 const newCart = [...get().cart, newProduct];
                 set({ cart: newCart });
@@ -15,6 +25,9 @@ export const useStore = create<ProductType & any>()(
                     return item.sku !== product.sku;
                 });
                 set({ cart: newCart });
+            },
+            cleanUpCart: () => {
+                set({ cart: [] });
             },
         }),
         {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useStore } from "@/store/stroe";
 import { useUser } from "@/store/stroe";
 import { useRouter } from "next/navigation";
@@ -10,10 +10,9 @@ import { updateLeadHonorific } from "@/api/bitrix";
 const ConfirmOrderPage = () => {
     const Telegram = useTelegram();
     const navigator = useRouter();
-    const { cart, setCart } = useStore();
+    const { cart, cleanUpCart } = useStore();
     const { user } = useUser();
 
-    const queryID = Telegram.webApp?.initDataUnsafe.query_id;
     Telegram.webApp?.MainButton.setParams({
         text: "Оформить",
         color: "#c80a21",
@@ -22,20 +21,14 @@ const ConfirmOrderPage = () => {
     Telegram.webApp?.MainButton.show();
 
     // on send data
-    const onSendData = useCallback(() => {
+    const onSendData = () => {
+        cleanUpCart();
         updateLeadHonorific(user.orderID);
 
-        fetch(" https://058b-92-55-35-48.ngrok-free.app", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ queryID, orderID: user.orderID }),
-        });
+        Telegram.webApp?.sendData(JSON.stringify({ bitrixID: user.bitrixID }));
 
-        setCart([]);
         Telegram.webApp?.close();
-    }, []);
+    };
 
     useEffect(() => {
         Telegram.webApp?.onEvent("mainButtonClicked", onSendData);
@@ -47,7 +40,7 @@ const ConfirmOrderPage = () => {
     function getTotalPrice() {
         let totalPrice: number = 0;
         cart.map((item: any) => {
-            totalPrice += +item.price;
+            totalPrice += item.quantity ? +item.price * item.quantity : +item.price;
         });
         return totalPrice;
     }
@@ -105,7 +98,10 @@ const ConfirmOrderPage = () => {
                             <h2 className='text-xl text-[#fff] font-bold mt-[10px]'>Товары</h2>
                             <ol className='list-decimal text-start flex flex-col gap-[10px] text-[#3d3d3d]'>
                                 {cart.map((item: any) => (
-                                    <li key={JSON.stringify(item)}>{item.name}</li>
+                                    <li
+                                        key={JSON.stringify(
+                                            item
+                                        )}>{`${item.name} - ${item.quantity} шт.`}</li>
                                 ))}
                             </ol>
                             <h2 className='text-lg self-end mt-[10px] text-start  text-[#3d3d3d]'>

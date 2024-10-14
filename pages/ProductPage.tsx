@@ -10,6 +10,8 @@ import Header from "@/components/shared/Header";
 import Loader from "@/components/shared/Loader";
 import TabsTable from "@/components/widgets/TabsTable";
 import { Button } from "@/components/ui/button";
+import Counter from "@/components/ui/quantity-counter";
+import Footer from "@/components/shared/Footer";
 
 const ProductPage = () => {
     const { productID } = useProductID();
@@ -64,21 +66,12 @@ const ProductPage = () => {
                     <div className='flex items-center w-full px-[20px] mt-[5px]'>
                         <p>Артикул: {product.sku}</p>
                     </div>
+                    <h3 className='text-2xl font-bold px-[20px] mt-[20px]'>{product.price} руб.</h3>
                     <div className='mt-[20px] flex justify-between px-[20px] items-center'>
-                        <Button asChild>
-                            <div
-                                onClick={handleSelect}
-                                className={`w-[150px] cursor-pointer text-white text-xl font-extrabold h-[50px] ${
-                                    isSelected
-                                        ? "!bg-black text-orange border border-orange"
-                                        : "!bg-orange text-white"
-                                }`}>
-                                {isSelected ? "Добавлено" : "В корзину"}
-                            </div>
-                        </Button>
-                        <h3 className='text-2xl font-bold'>{product.price} руб.</h3>
+                        <Counter className='w-[270px]' item={product} />
                     </div>
                     <TabsTable description={product.description} className='mt-[20px] mb-[40px]' />
+                    <Footer />
                 </div>
             ) : (
                 <Loader />

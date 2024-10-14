@@ -12,7 +12,7 @@ const config: Config = {
             colors: {
                 bluedark: "var(--tg-theme-bg-color)",
                 bluelight: "var(--tg-theme-button-color)",
-                white: "var(--tg-theme-text-color)",
+                white: "#ccc",
                 black: "#111",
                 orange: "#c80a21",
                 background: "hsl(var(--background))",

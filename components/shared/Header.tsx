@@ -30,7 +30,7 @@ const Header = ({ navigateBack }: { navigateBack?: boolean }) => {
     }
 
     return (
-        <div className='max-w-full z-10 cursor-pointer w-screen h-[60px] px-[10px] flex items-center justify-between fixed top-0 left-0 bg-black/[0.85] !backdrop-blur-[5px]'>
+        <div className='max-w-full z-50 cursor-pointer w-screen h-[60px] px-[10px] flex items-center justify-between fixed top-0 left-0 bg-black/[0.85] !backdrop-blur-[5px]'>
             {navigateBack ? (
                 <div onClick={handleBack} className='flex items-center gap-[24px]'>
                     <svg
