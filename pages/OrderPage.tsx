@@ -122,98 +122,102 @@ const OrderPage = () => {
 
     return (
         <div className='flex flex-col'>
-            <div className='w-full h-[50px] flex items-center px-[20px] justify-between'>
-                <div onClick={handleBack} className='flex items-center gap-[24px]'>
-                    <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 24 24'
-                        fill='currentColor'
-                        className='size-6'>
-                        <path
-                            fillRule='evenodd'
-                            d='M9.53 2.47a.75.75 0 0 1 0 1.06L4.81 8.25H15a6.75 6.75 0 0 1 0 13.5h-3a.75.75 0 0 1 0-1.5h3a5.25 5.25 0 1 0 0-10.5H4.81l4.72 4.72a.75.75 0 1 1-1.06 1.06l-6-6a.75.75 0 0 1 0-1.06l6-6a.75.75 0 0 1 1.06 0Z'
-                            clipRule='evenodd'
-                        />
-                    </svg>
-                    <p className='text-xl font-[600]'>Hilux Toyota</p>
-                </div>
-                <Image
-                    src='/logo.png'
-                    width={50}
-                    height={35}
-                    className='h-[35px]'
-                    alt='toyota_logo'
-                />
-                {/* <img src='/logo.png' className='h-[35px]' alt='toyota_logo' /> */}
-            </div>
-            <h1 className='w-full flex justify-center mt-[20px] mb-[20px] text-2xl font-extrabold text-orange'>
-                Детали заказа
-            </h1>
-            <div className='w-full flex flex-col gap-[10px] ml-[30px]'>
-                <div>
-                    <p className='text-lg mb-[5px]'>Ваше Имя</p>
-                    <div className='border border-orange w-[300px] h-[40px] rounded-lg'>
-                        <input
-                            ref={refInputName}
-                            spellCheck={false}
-                            placeholder='Имя'
-                            type='text'
-                            className='bg-transparent border-none outline-none px-[10px] h-full'
-                        />
+            <div className='min-h-screen'>
+                <div className='w-full h-[50px] flex items-center px-[20px] justify-between'>
+                    <div onClick={handleBack} className='flex items-center gap-[24px]'>
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            viewBox='0 0 24 24'
+                            fill='currentColor'
+                            className='size-6'>
+                            <path
+                                fillRule='evenodd'
+                                d='M9.53 2.47a.75.75 0 0 1 0 1.06L4.81 8.25H15a6.75 6.75 0 0 1 0 13.5h-3a.75.75 0 0 1 0-1.5h3a5.25 5.25 0 1 0 0-10.5H4.81l4.72 4.72a.75.75 0 1 1-1.06 1.06l-6-6a.75.75 0 0 1 0-1.06l6-6a.75.75 0 0 1 1.06 0Z'
+                                clipRule='evenodd'
+                            />
+                        </svg>
+                        <p className='text-xl font-[600]'>Hilux Toyota</p>
                     </div>
-                </div>
-                <div>
-                    <p className='text-lg mb-[5px]'>Номер телефона</p>
-                    <div className='border border-orange w-[300px] h-[40px] rounded-lg'>
-                        <input
-                            ref={refInputPhone}
-                            spellCheck={false}
-                            placeholder='Телефон'
-                            pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
-                            type='tel'
-                            className='bg-transparent border-none outline-none px-[10px] h-full'
-                        />
-                    </div>
-                </div>
-                <div className='mb-[30px]'>
-                    <p className='text-lg mb-[5px]'>Адрес электронной почты</p>
-                    <div className='border border-orange w-[300px] h-[40px] rounded-lg'>
-                        <input
-                            ref={refInputEmail}
-                            spellCheck={false}
-                            placeholder='Email'
-                            pattern='.+@example\.com'
-                            type='email'
-                            className='bg-transparent border-none outline-none px-[10px] h-full'
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className='w-full flex flex-col px-[20px] gap-[5px]'>
-                <h2 className='text-xl font-bold'>Дополнительно</h2>
-                <p className='text-sm font-extralight mb-[5px]'>
-                    Примечание к заказу (не обязательно)
-                </p>
-                <div className='border border-orange w-full h-[120px] rounded-lg'>
-                    <textarea
-                        ref={refInputNote}
-                        spellCheck={false}
-                        className='bg-transparent border-none outline-none p-[10px] h-full'
+                    <Image
+                        src='/logo.png'
+                        width={50}
+                        height={35}
+                        className='h-[35px]'
+                        alt='toyota_logo'
                     />
+                    {/* <img src='/logo.png' className='h-[35px]' alt='toyota_logo' /> */}
                 </div>
-                <p className='text-sm font-light mt-[5px]'>
-                    <span className='text-lg text-orange'>*</span> после форормления заказа наш
-                    мененджер свяжется с Вами в ближайшее рабочее время
-                </p>
-            </div>
-            <div className='h-fit ml-[20px] mt-[30px]'>
-                <Button className='cursor-pointer text-lg bg-orange active:animate-ping' asChild>
-                    <div onClick={handleButtonReady} className='w-[150px]'>
-                        Готово
+                <h1 className='w-full flex justify-center mt-[20px] mb-[20px] text-2xl font-extrabold text-orange'>
+                    Детали заказа
+                </h1>
+                <div className='w-full flex flex-col gap-[10px] ml-[30px]'>
+                    <div>
+                        <p className='text-lg mb-[5px]'>Ваше Имя</p>
+                        <div className='border border-orange w-[300px] h-[40px] rounded-lg'>
+                            <input
+                                ref={refInputName}
+                                spellCheck={false}
+                                placeholder='Имя'
+                                type='text'
+                                className='bg-transparent border-none outline-none px-[10px] h-full'
+                            />
+                        </div>
                     </div>
-                </Button>
+                    <div>
+                        <p className='text-lg mb-[5px]'>Номер телефона</p>
+                        <div className='border border-orange w-[300px] h-[40px] rounded-lg'>
+                            <input
+                                ref={refInputPhone}
+                                spellCheck={false}
+                                placeholder='Телефон'
+                                pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
+                                type='tel'
+                                className='bg-transparent border-none outline-none px-[10px] h-full'
+                            />
+                        </div>
+                    </div>
+                    <div className='mb-[30px]'>
+                        <p className='text-lg mb-[5px]'>Адрес электронной почты</p>
+                        <div className='border border-orange w-[300px] h-[40px] rounded-lg'>
+                            <input
+                                ref={refInputEmail}
+                                spellCheck={false}
+                                placeholder='Email'
+                                pattern='.+@example\.com'
+                                type='email'
+                                className='bg-transparent border-none outline-none px-[10px] h-full'
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className='w-full flex flex-col px-[20px] gap-[5px]'>
+                    <h2 className='text-xl font-bold'>Дополнительно</h2>
+                    <p className='text-sm font-extralight mb-[5px]'>
+                        Примечание к заказу (не обязательно)
+                    </p>
+                    <div className='border border-orange w-full h-[120px] rounded-lg'>
+                        <textarea
+                            ref={refInputNote}
+                            spellCheck={false}
+                            className='bg-transparent border-none outline-none p-[10px] h-full'
+                        />
+                    </div>
+                    <p className='text-sm font-light mt-[5px]'>
+                        <span className='text-lg text-orange'>*</span> после форормления заказа наш
+                        мененджер свяжется с Вами в ближайшее рабочее время
+                    </p>
+                </div>
+                <div className='h-fit ml-[20px] mt-[30px]'>
+                    <Button
+                        className='cursor-pointer text-lg bg-orange active:animate-ping'
+                        asChild>
+                        <div onClick={handleButtonReady} className='w-[150px]'>
+                            Готово
+                        </div>
+                    </Button>
+                </div>
             </div>
-            <Footer className='absolute top-[100vh]' />
+            <Footer />
             {isAllert ? <Allert /> : null}
         </div>
     );
