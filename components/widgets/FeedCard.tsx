@@ -20,7 +20,7 @@ const FeedCard = ({ item }: { item: ProductType }) => {
     }
 
     return (
-        <div className='justify-self-center flex flex-col w-[300px] h-[418px] gap-[10px] mb-[20px] bg-[#fff]/[0.03] py-[40px] px-[20px] rounded-2xl'>
+        <div className='justify-self-center flex flex-col w-[300px] gap-[10px] mb-[20px] bg-[#fff]/[0.03] py-[40px] px-[20px] rounded-2xl'>
             <div className='flex justify-between'>
                 <div className='relative rounded-xl w-[100px] h-[100px] overflow-x-scroll flex snap-x '>
                     <div className='h-full w-[10px] bg-orange absolute' />
@@ -49,8 +49,10 @@ const FeedCard = ({ item }: { item: ProductType }) => {
                     <p className='text-orange text-2xl font-black '>{item.price} руб</p>
                 </div>
             </div>
-            <h2 className='text-xl font-bold h-[85px] overflow-hidden'>{item.name}</h2>
-            <div className='text-sm font-light'>{parser(item.short_description)}</div>
+            <h2 className='text-xl font-bold h-[3.5rem] overflow-hidden'>{item.name}</h2>
+            <div className='text-sm h-[3.425rem] font-light overflow-y-scroll'>
+                {parser(item.short_description)}
+            </div>
 
             <Button asChild>
                 <div
